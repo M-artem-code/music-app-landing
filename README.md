@@ -14,12 +14,8 @@ docs/screenshots/
   mobile.png
 ```
 
-- **Home**
-  - `docs/screenshots/home.png`
-- **Player**
-  - `docs/screenshots/player.png`
-- **Playlists**
-  - `docs/screenshots/playlists.png`
+![screenshot](docs/screenshots/app.png)
+![screenshot](docs/screenshots/app1.png)
 
 ## Технологии
 
