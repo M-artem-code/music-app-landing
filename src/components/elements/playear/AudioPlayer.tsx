@@ -18,12 +18,15 @@ export const AudioPlayer = observer(() => {
   const { audioRef, changeTrack, onSeek, setVolume, tooglePlay, toggleMute } =
     useAudioPlayer();
 
+  const trackFile = playStore.currentTrack?.file;
+  const isPlaying = playStore.isPlaying;
+
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio || !trackFile) return;
 
     // если isPlaying true — пытаемся воспроизвести (пользовательский клик или программно)
-    if (playStore.isPlaying) {
+    if (isPlaying) {
       // browser может отклонить play(), но клик по треку — пользовательское действие, обычно OK
       audio
         .play()
@@ -39,7 +42,7 @@ export const AudioPlayer = observer(() => {
       audio.pause();
     }
     // Подписываем effect на файл трека и флаг isPlaying
-  }, [audioRef, playStore.currentTrack?.file, playStore.isPlaying]);
+  }, [audioRef, trackFile, isPlaying]);
 
   if (!playStore.currentTrack) {
     return null;

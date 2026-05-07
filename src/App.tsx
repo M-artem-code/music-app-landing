@@ -16,7 +16,9 @@ const App = observer(() => {
 
   const filteredTracks = useMemo(() => {
     return TRACKS.filter((track) =>
-      track.name.toLowerCase().includes((searchTerm || "").toLowerCase()),
+      track.name
+        .toLowerCase()
+        .includes((debouncedSearchTerm || "").toLowerCase()),
     );
   }, [debouncedSearchTerm]);
 
