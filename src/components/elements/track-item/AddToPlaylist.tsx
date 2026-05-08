@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { playlistStore } from "@/store/playlist.store";
 import type { ITrack } from "@/types/track.types";
+import { trackKey } from "@/functions";
 import { Check, Plus } from "lucide-react";
 import { Modal } from "@/components/ui/modal/modal";
 
@@ -31,10 +32,8 @@ export const AddToPlaylist = observer(
 
           <div className="space-y-1 max-h-60 overflow-y-auto">
             {playlists.map((playlist) => {
-              const isAdded = playlist.tracks.some(
-                (t) =>
-                  t.name === track.name && t.artist.name === track.artist.name,
-              );
+              const key = trackKey(track);
+              const isAdded = playlist.tracks.some((t) => trackKey(t) === key);
 
               return (
                 <button

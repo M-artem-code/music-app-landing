@@ -4,7 +4,7 @@ import { favoriteStore } from "@/store/favorite.store";
 import type { ITrack } from "@/types/track.types";
 import { Ellipsis, Heart } from "lucide-react";
 import { observer } from "mobx-react-lite";
-import React, { useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { AddToPlaylist } from "./AddToPlaylist";
 

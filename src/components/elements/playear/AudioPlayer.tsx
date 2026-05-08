@@ -66,8 +66,8 @@ export const AudioPlayer = observer(() => {
           playStore.seek(playStore.currentTime);
         }}
         onEnded={() => {
-          playStore.isPlaying = false;
           changeTrack("next");
+          playStore.isPlaying = true;
         }}
         onLoadedMetadata={() => {
           // Обновляем продолжительность трека при загрузке

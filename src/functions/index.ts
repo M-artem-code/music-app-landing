@@ -1,4 +1,5 @@
 export { formatDuration } from "./formatDuration";
+export { trackKey } from "./trackKey";
 
 // Функции для работы с localStorage
 export const loadFromLocalStorage = <T>(key: string, fallback: T): T => {
