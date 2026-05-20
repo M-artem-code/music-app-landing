@@ -39,21 +39,38 @@ class PlaylistStore {
     saveToLocalStorage("playlists", this.playlists);
   }
 
-  // Добавить трек в плейлист
-  addTrackToPlaylist(playlistId: string, track: ITrack) {
+  isTrackInPlaylist(playlistId: string, track: ITrack): boolean {
     const playlist = this.playlists.find((p) => p.id === playlistId);
-    if (playlist) {
-      // Проверяем, есть ли уже такой трек в плейлисте
-      const key = trackKey(track);
-      const isAlreadyInPlaylist = playlist.tracks.some(
-        (t) => trackKey(t) === key,
-      );
+    if (!playlist) return false;
 
-      if (!isAlreadyInPlaylist) {
-        playlist.tracks.push(track);
-        saveToLocalStorage("playlists", this.playlists);
-      }
+    const key = trackKey(track);
+    return playlist.tracks.some((t) => trackKey(t) === key);
+  }
+
+  // Добавить трек в плейлист (копия в localStorage, исходный каталог TRACKS не меняется)
+  addTrackToPlaylist(playlistId: string, track: ITrack): boolean {
+    const playlist = this.playlists.find((p) => p.id === playlistId);
+    if (!playlist) return false;
+
+    if (this.isTrackInPlaylist(playlistId, track)) return false;
+
+    playlist.tracks.push({ ...track });
+    saveToLocalStorage("playlists", this.playlists);
+    return true;
+  }
+
+  toggleTrackInPlaylist(
+    playlistId: string,
+    track: ITrack,
+  ): "added" | "removed" | "noop" {
+    if (!this.playlists.some((p) => p.id === playlistId)) return "noop";
+
+    if (this.isTrackInPlaylist(playlistId, track)) {
+      this.removeTrackFromPlaylist(playlistId, track);
+      return "removed";
     }
+
+    return this.addTrackToPlaylist(playlistId, track) ? "added" : "noop";
   }
 
   // Удалить трек из плейлиста
